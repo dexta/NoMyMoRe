@@ -1,0 +1,24 @@
+{
+  "name": "monitor-nomymore-app",
+  "version": "0.0.1",
+  "description": "just some test stuff to see data flow in these apps",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "dexta.de@gmail.com",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "async": "^2.6.0",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.2",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.14.12"
+  },
+  "devDependencies": {
+    "bootstrap": "^4.0.0",
+    "font-awesome": "^4.7.0",
+    "riot": "^3.8.1",
+    "superagent": "^3.8.2"
+  }
+}
