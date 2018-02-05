@@ -2,10 +2,14 @@ let mdb = {};
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
-const URL = 'mongodb://mongo:27017/viewStore';
+const URL = 'mongodb://mongo:27017/teststatmongo';
 
 mdb.insert = function insert(insertObj,callback) {
-  MongoClient.connect(URL, function(err, db) {
+  MongoClient.connect(URL, function(err, client) {
+    let db = client.db('teststatmongo'); 
+    console.log("debug mongodb");
+    console.dir(err);
+    console.dir(db);
     if(!Array.isArray(insertObj.data)) {
       db.collection(insertObj.table).insertOne(insertOne.data,function(err, r){
         callback(err,r);
@@ -21,7 +25,8 @@ mdb.insert = function insert(insertObj,callback) {
 };
 
 mdb.select = function select(selectObj,callback) {
-  MongoClient.connect(URL, function(err, db) {
+  MongoClient.connect(URL, function(err, client) {
+    let db = client.db('teststatmongo'); 
     db.collection(selectObj.table).find(selectObj.find).toArray(function(err, docs) {
       callback(err, docs);
       db.close();      

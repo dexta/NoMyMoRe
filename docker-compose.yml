@@ -9,8 +9,8 @@ services:
     ports:
       - "5000:8080"
     networks:
-      - front-tier
-      - back-tier
+      - frontendNetwork
+      - backendNetwork
 
   monitor:
     build: ./monitor
@@ -20,8 +20,8 @@ services:
     ports:
       - "5001:8080"
     networks:
-      - front-tier
-      - back-tier
+      - frontendNetwork
+      - backendNetwork
 
   # worker:
   #   build:
@@ -29,14 +29,14 @@ services:
   #   depends_on:
   #     - "redis"
   #   networks:
-  #     - back-tier
+  #     - backendNetwork
 
   redis:
     image: redis:alpine
     container_name: redis
     ports: ["6379"]
     networks:
-      - back-tier
+      - backendNetwork
 
   # sqldb:
   #   image: mariadb
@@ -52,7 +52,7 @@ services:
   #   ports:
   #     - 8306:3306
   #   networks:
-  #     - back-tier
+  #     - backendNetwork
 
   sqldb:
     image: mariadb
@@ -63,7 +63,7 @@ services:
       MYSQL_PASSWORD: testdbpassword
       MYSQL_DATABASE: teststatdb
     networks:
-      - back-tier
+      - backendNetwork
     volumes:
       - ./data/maria:/var/lib/mysql
     # ports:
@@ -75,12 +75,14 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
+    networks:
+      - backendNetwork
     volumes:
       - ./data/mongo:/data/db
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null # --quiet
 
 networks:
-  front-tier:
-  back-tier:
+  frontendNetwork:
+  backendNetwork:
