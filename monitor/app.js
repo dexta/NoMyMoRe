@@ -15,13 +15,13 @@ sqlChecks.testDatabase( (rows) => {
 });
 const mongoChecks = require('./mongoStatChecks');
 
-mongoChecks.insert({table:{testinsert:"version"}}, (err,res) => {
+mongoChecks.insert({data:{testinsert:"version"},table:'testdatacheck'}, (err,res) => {
 	if(!err) {
 		console.log("mongo test insert");
-		console.dir(res);
-		mongoChecks.select({find:'testinsert'}, (err,res) => {
+		// console.dir(res);
+		mongoChecks.select({table:'testdatacheck',find:'testinsert'}, (err,res) => {
 			console.log("mongo test select");
-			console.dir(res);
+			// console.dir(res);
 		});
 	}
 });
