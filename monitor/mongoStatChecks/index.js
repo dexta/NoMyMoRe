@@ -34,6 +34,35 @@ mdb.select = function select(selectObj,callback) {
   });
 };
 
+
+mdb.testConnection = function testConnection(callback) {
+  mdb.insert({data:{testinsert:"version"},table:'testdatacheck'}, (err,res) => {
+    if(err) {
+      callback(err,res);
+    } else { 
+      mdb.select({table:'testdatacheck',find:'testinsert'}, (err,res) => {
+        callback(err,res);
+      });
+    }
+  });  
+};
+
+
+mdb.testDatabase = function testDatabase(callback){
+  let statBack = {check:'mongo',state:false};
+  mdb.testConnection( (err, data) => {
+    if(err) {
+      statBack.err = err;
+    } else if(data||false) {
+      statBack.info = 'connection and insert are working';
+      statBack.state = true;
+    } else {
+      statBack.err = err;
+      statBack.info = 'some went extreamly wrong';
+    }
+    callback(statBack);
+  });
+};
  
 // and export all
 module.exports = mdb;

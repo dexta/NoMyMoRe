@@ -66,6 +66,35 @@ redisdb.listQueues = function(callback) {
 	});
 };
 
+
+redisdb.testConnection = function testConnection(callback) {
+	redisdb.createQueue('testqueuetest', (resp) => {
+		if(!resp) {
+			callback('cant connect',resp);
+		} else {
+			redisdb.listQueues( (err,queues) => {
+				callback(err,queues);
+			});		
+		}
+	});
+	
+};
+
+redisdb.testDatabase = function testDatabase(callback){
+  let statBack = {check:'redis',state:false};
+  redisdb.testConnection( (err, data) => {
+    if(err) {
+      statBack.err = err;
+    } else if(data||false) {
+      statBack.info = 'connection and insert are working';
+      statBack.state = true;
+    } else {
+      statBack.err = err;
+      statBack.info = 'some went extreamly wrong';
+    }
+    callback(statBack);
+  });
+};
  
 // and export all
 module.exports = redisdb;

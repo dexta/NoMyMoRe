@@ -9,39 +9,32 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 
+let swarmStat = {};
+
 const sqlChecks = require('./sqlStatChecks');
-sqlChecks.testDatabase( (rows) => {
-  console.dir(rows);
+sqlChecks.testDatabase( (testresult) => {
+  swarmStat[testresult.check] = testresult;
 });
 const mongoChecks = require('./mongoStatChecks');
 
-mongoChecks.insert({data:{testinsert:"version"},table:'testdatacheck'}, (err,res) => {
-	if(!err) {
-		console.log("mongo test insert");
-		// console.dir(res);
-		mongoChecks.select({table:'testdatacheck',find:'testinsert'}, (err,res) => {
-			console.log("mongo test select");
-			// console.dir(res);
-		});
-	}
+mongoChecks.testDatabase( (testresult) => {
+  swarmStat[testresult.check] = testresult;
 });
 
 const redisChecks = require('./redisStatChecks');
-redisChecks.createQueue('testqueuetest', (resp) => {
-	console.dir(resp);
-});
-redisChecks.listQueues( (err,queues) => {
-	if(err) {
-		console.dir(err);
-	} else {
-		console.dir(queues);
-	}
+
+redisChecks.testDatabase( (testresult) => {
+  swarmStat[testresult.check] = testresult;
 });
 
 app.use(express.static('frontend'));
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello i am the webapp</h1>\n');
+});
+
+app.get('/healthcheck', (req, res) => {
+	res.json(swarmStat);
 });
 
 app.listen(PORT, HOST);
