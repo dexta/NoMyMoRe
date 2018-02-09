@@ -1,0 +1,15 @@
+{
+  "name": "hello-nomymore-app",
+  "version": "0.0.1",
+  "description": "just some test stuff to see data flow in these apps",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "dexta.de@gmail.com",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.16.2",
+    "nodemon": "^1.14.12"
+  }
+}
