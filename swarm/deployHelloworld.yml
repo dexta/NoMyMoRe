@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  nginx-proxy:
+    image: helloworld/dockertest
+    environment:
+      - VIRTUAL_HOST=helloworld.dockerlocal
+      - VIRTUAL_PORTO=8080
+    networks:
+      - frontendNetwork
+      - backendNetwork
+
+networks:
+  frontendNetwork:
+  backendNetwork:
