@@ -1,0 +1,23 @@
+version: "3"
+services:
+
+  hello:
+    image: gitlab.fritz.box:4567/dexta/hello-docker:0.5
+    environment:
+      - NODE_hello=dexta
+    ports:
+      - "8000:8080"
+    networks:
+      - helloFrontend
+    deploy:
+      mode: replicated
+      replicas: 8
+      update_config:
+        parallelism: 2
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+
+
+networks:
+  helloFrontend:
