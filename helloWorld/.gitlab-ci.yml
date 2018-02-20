@@ -1,0 +1,37 @@
+image: node:8.9-slim
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - test
+  - test2
+  - deploy
+  - building
+
+test_async:
+  stage: test
+  environment: test
+  script:
+   - npm install
+   - npm test
+  tags:
+    - docker
+    - test
+
+test_build:
+  stage: test2
+  environment: test
+  script:
+    - npm install
+  tags:
+    - docker
+    - test2
+
+
+deploy:
+  stage: deploy
+  environment: deploy
+  script:
+    - echo 'just a test'

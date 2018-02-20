@@ -2,7 +2,7 @@ version: "3"
 services:
 
   hello:
-    image: gitlab.fritz.box:4567/dexta/hello-docker:0.5
+    image: game.lieray.de/dexta/hello-docker:0.6
     environment:
       - NODE_hello=dexta
     ports:
