@@ -1,5 +1,5 @@
 <hello class="row">
-<div class="col-4">
+<div class="col-lg-4 col-md-6 col-sm-12">
 	<div class="card">
 		<img class="card-img-top" src="/img/docker_head.png" style="width:320px" alt="Docker Logo">
 	  <div class="card-block">
@@ -13,7 +13,7 @@
 	  </ul>
 	</div>
 </div>
-<div class="col-3" each={ block,index in envlist }>
+<div class="col-lg-3 col-md-6 col-sm-12" each={ block,index in envlist }>
 	<div class="card">
 		<b>Index: { index }</b>
     <ul class="list-group list-group-flush" each={ value,key in block }>
