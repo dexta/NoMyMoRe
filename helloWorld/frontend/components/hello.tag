@@ -1,5 +1,5 @@
-<hello>
-<div class="col">
+<hello class="row">
+<div class="col-4">
 	<div class="card">
 		<img class="card-img-top" src="/img/docker_head.png" style="width:320px" alt="Docker Logo">
 	  <div class="card-block">
@@ -11,27 +11,41 @@
 	    <li class="list-group-item">Hostip/eth0: {hostdata.hostip}</li>
 	    <li class="list-group-item">Time of session: {timeleft}</li>
 	  </ul>
-	  <div class="card-block">
-	    <a href="#" class="card-link">Card link</a>
-	    <a href="#" class="card-link">Another link</a>
-	  </div>
 	</div>
 </div>
-<div class="col">
-	<!-- <div class="card"> -->
-		<ul class="list-group list-group-flush" each={ checks,index in envlist }>
-			<li class="list-group-item">{index} : { short(checks) }</li>
+<div class="col-3" each={ block,index in envlist }>
+	<div class="card">
+		<b>Index: { index }</b>
+    <ul class="list-group list-group-flush" each={ value,key in block }>
+			<li class="list-group-item">{key} : { short(value) }</li>
 		</ul>
-	<!-- </div> -->
+	</div>
 </div>
 <script>
   let that = this;
-  this.envlist = {};
+  this.envlist = [];
   this.hostdata = {};
   this.timeleft = 0;
 
   superagent('get','/test/env').then( (res) => {
-  	that.envlist = res.body;
+  	that.envlist = [];
+    let counter = 0;
+    let blockmax = 4;
+    let blockcount = 0;
+    that.envlist[blockcount] = {};
+    console.dir(res.body);
+    let biglist = res.body;
+    
+    for(let el in biglist) {
+      that.envlist[blockcount][el] = biglist[el]||"error";
+      counter++;
+      if(counter%blockmax===0) {
+        blockcount++;
+        that.envlist[blockcount] = {};
+      }
+    }
+    console.dir(bidlist);
+    console.dir(that.envlist);
   	that.update();
   });
   superagent('get','/hostdata').then( (res) => {
@@ -44,7 +58,7 @@
   this.con = (tn) => { 
   	that.timeleft = tn;
   	setTimeout( ()=> { if(tn>0) that.con(tn-1); },1000 );
-  	this.update();
+  	that.update();
   }; 
   console.log("parse hello tag stated !!!!");
   this.con(30);
