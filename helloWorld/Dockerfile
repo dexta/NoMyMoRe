@@ -13,6 +13,8 @@ RUN npm install
 # RUN npm install --only=production
 
 # Bundle app source
+ADD ./test ./test
+ADD ./frontend ./frontend
 COPY ./app.js .
 
 EXPOSE 8080
