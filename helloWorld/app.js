@@ -24,7 +24,7 @@ app.get('/simple', (req, res) => {
 });
 
 app.get('/hostdata', (req,res) => {
-	res.status(200).json({hostname,hostip});
+	res.status(200).json({hostname,hostip,buildversion:process.env.buildversion});
 });
 
 app.get('/test/truefalse/', (req,res) => {
