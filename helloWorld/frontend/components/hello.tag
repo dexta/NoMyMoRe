@@ -21,8 +21,6 @@
         </div>
       </li>
 	  </ul>
-
-  
 	</div>
 </div>
 
@@ -41,14 +39,11 @@
     window.location.href = window.location.href;
   }
 
-  
   superagent('get','/hostdata').then( (res) => {
   	that.hostdata = res.body;
   	that.update();
   });
   
-
-
   this.con = (tn) => { 
   	if(tn<=0&&that.checkedautoreload) that.reloadContainer();
     that.timeleft = tn;
@@ -57,10 +52,6 @@
   }; 
   console.log("parse hello tag stated !!!!");
   this.con(30);
-
-
-
-
 </script>
 
 </hello>

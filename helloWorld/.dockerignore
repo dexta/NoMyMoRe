@@ -1,2 +1,8 @@
+# dotfiles
 \.*
+# node and stuff
 node_modules/
+
+# docker files
+Dockerfile
+docker-stack.yml

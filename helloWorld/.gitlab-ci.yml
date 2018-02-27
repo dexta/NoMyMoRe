@@ -6,7 +6,6 @@ cache:
 
 stages:
   - test
-  - test2
   - deploy
   - building
 
@@ -21,17 +20,10 @@ test_async:
     - test
 
 test_build:
-  stage: test2
+  stage: test
   environment: test
   script:
     - npm install
   tags:
     - docker
-    - test2
-
-
-deploy:
-  stage: deploy
-  environment: deploy
-  script:
-    - echo 'just a test'
+    - test
